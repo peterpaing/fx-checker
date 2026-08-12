@@ -16,7 +16,7 @@ const ExchangeContext = createContext<ExchangeContextType | null>(null)
 export function ExchangeProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   const [amount, setAmount] = useState("")
   const [fromCurrency, setFromCurrency] = useState("USD")
