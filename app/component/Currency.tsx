@@ -1,21 +1,30 @@
-"use client";
+"use client"
 
-import { useState } from "react";
+import { useExchange } from "@/app/component/ExchangeContext"
+import { useState } from "react"
 import { currencies, type Currency } from "@/app/data/currencies"
 import { IoSearch } from "react-icons/io5"
 import { MdArrowDropDown } from "react-icons/md"
 
 type CurrencySelectorProps = {
-  defaultCurrency?: string
+  type: "from" | "to"
 }
 
 const popularCurrencies = currencies.slice(0, 5)
 
-export default function CurrencySelector({ defaultCurrency }: CurrencySelectorProps) {
+export default function CurrencySelector({type}: CurrencySelectorProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState("")
-  const initialCurrency =currencies.find((currency) => currency.code === defaultCurrency) ??currencies[0]
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(initialCurrency)
+  const {
+  fromCurrency,
+  toCurrency,
+  setFromCurrency,
+  setToCurrency,
+} = useExchange()
+
+const selectedCode = type === "from" ? fromCurrency : toCurrency
+
+const selectedCurrency =currencies.find((currency) => currency.code === selectedCode) ??currencies[0]
 
   function handleToggle() {
     setIsOpen((prev) => !prev)
@@ -25,11 +34,16 @@ export default function CurrencySelector({ defaultCurrency }: CurrencySelectorPr
     setSearch(event.target.value)
   }
 
-  function handleSelect(currency: Currency) {
-    setSelectedCurrency(currency)
-    setIsOpen(false)
-    setSearch("")
+function handleSelect(currency: Currency) {
+  if (type === "from") {
+    setFromCurrency(currency.code)
+  } else {
+    setToCurrency(currency.code)
   }
+
+  setIsOpen(false)
+  setSearch("")
+}
 
   const filteredCurrencies = currencies.filter(
     (currency) =>

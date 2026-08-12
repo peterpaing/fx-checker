@@ -1,7 +1,7 @@
 import { JetBrains_Mono } from 'next/font/google';
 import "./globals.css";
 import Header from '@/app/component/Header'
-import ExchangeInput from './component/ExchangInput'
+import { ExchangeProvider } from "@/app/component/ExchangeContext"
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -17,8 +17,9 @@ export default function RootLayout({ children }: {children: React.ReactNode}) {
     >
       <body className={`${jetbrainsMono.className} min-h-full flex flex-col bg-black text-white`}>
         <Header/>
-        <ExchangeInput/>
+        <ExchangeProvider>
         {children}
+      </ExchangeProvider>
       </body>
     </html>
   );
