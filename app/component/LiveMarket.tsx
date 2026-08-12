@@ -11,6 +11,7 @@ type Change = {
 
 export default async function LiveMarket() {
 
+try {
 const currencies ="EUR,GBP,JPY,CHF,AUD,CAD,NZD,CNY,HKD,SGD,KRW,INR,THB,MYR,PHP,IDR,SEK,NOK,DKK,PLN"
 
 const currentRes  = await fetch(
@@ -19,6 +20,9 @@ const currentRes  = await fetch(
     next: { revalidate: 60 },
   }
 )
+if (!currentRes.ok) {
+    throw new Error("Failed to fetch current rates")
+}
 
 const currentRates: Rate[]  = await currentRes .json()
 
@@ -40,6 +44,10 @@ const previousRes = await fetch(
       next: { revalidate: 60 },
     }
   )
+
+if (!previousRes.ok) {
+    throw new Error("Failed to fetch previous rates")
+}
 
 const previousRates: Rate[] = await previousRes.json()
 
@@ -64,8 +72,9 @@ const changes: Change[] = currentRates.map((current) => {
 })
     return (
         <section className="flex items-center text-sm md:text-base">
-            <h2 className="p-4 bg-lime-500 text-black font-semibold whitespace-nowrap">Live Market</h2>
-            <div className="flex gap-2 overflow-x-auto bg-neutral-800 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <h2 className="p-4 bg-lime-500 text-neutral-900 font-semibold whitespace-nowrap">Live Market</h2>
+            <div className="flex-1 gap-2 overflow-x-auto bg-neutral-800 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div className="flex w-max animate-ticker">
                 {changes.map((item) => (
           <div key={item.currency} className="p-4 border-r-2 border-neutral-600 flex items-center gap-2">
             <span className="text-neutral-300">USD/{item.currency}</span>
@@ -77,6 +86,17 @@ const changes: Change[] = currentRates.map((current) => {
           </div>
         ))}
             </div>
+            </div>
         </section>
     )
+}catch (error) {
+    console.error("Live market error:", error)
+
+    return (
+      <section className="flex">
+        <h2 className="p-4 bg-lime-500 text-neutral-900 font-semibold whitespace-nowrap">Live Market</h2>
+        <p className="p-4 bg-neutral-800 text-red-500 text-sm md:text-base">Unable to load exchange rates. Please try again later.</p>
+      </section>
+    )
+  }
 }
