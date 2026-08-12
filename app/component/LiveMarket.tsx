@@ -31,11 +31,11 @@ const previousDay = new Date(today)
 previousDay.setDate(today.getDate() - 1)
 
 if (previousDay.getDay() === 0) {
-  previousDay.setDate(previousDay.getDate() - 2);
+  previousDay.setDate(previousDay.getDate() - 2)
 }
 
 if (previousDay.getDay() === 6) {
-  previousDay.setDate(previousDay.getDate() - 1);
+  previousDay.setDate(previousDay.getDate() - 1)
 }
 
 const previousRes = await fetch(
@@ -58,11 +58,11 @@ const changes: Change[] = currentRates.map((current) => {
   )
 
     if (!previous) {
-        throw new Error(`Previous rate not found for ${current.quote}`);
+        throw new Error(`Previous rate not found for ${current.quote}`)
     }
 
     const percentageChange =
-    ((current.rate - previous.rate) / previous.rate) * 100;
+    ((current.rate - previous.rate) / previous.rate) * 100
 
   return {
     currency: current.quote,
@@ -72,7 +72,7 @@ const changes: Change[] = currentRates.map((current) => {
 })
     return (
         <section className="flex items-center text-sm md:text-base">
-            <h2 className="p-4 bg-lime-500 text-neutral-900 font-semibold whitespace-nowrap">Live Market</h2>
+            <h2 className="p-4 bg-lime-500 text-neutral-900 font-semibold whitespace-nowrap uppercase">Live Market</h2>
             <div className="flex-1 gap-2 overflow-x-auto bg-neutral-800 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <div className="flex w-max animate-ticker">
                 {changes.map((item) => (
@@ -94,7 +94,7 @@ const changes: Change[] = currentRates.map((current) => {
 
     return (
       <section className="flex">
-        <h2 className="p-4 bg-lime-500 text-neutral-900 font-semibold whitespace-nowrap">Live Market</h2>
+        <h2 className="p-4 bg-lime-500 text-neutral-900 font-semibold whitespace-nowrap uppercase">Live Market</h2>
         <p className="p-4 bg-neutral-800 text-red-500 text-sm md:text-base">Unable to load exchange rates. Please try again later.</p>
       </section>
     )
