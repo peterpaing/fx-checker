@@ -1,4 +1,5 @@
 import { IoSwapVerticalOutline } from "react-icons/io5"
+import Currency from "@/app/component/Currency"
 
 export default function ExchangeInput() {
   return (
@@ -13,14 +14,15 @@ export default function ExchangeInput() {
               type="number"
               name="send"
               defaultValue="0"
-              className="w-full min-w-0 bg-transparent text-4xl font-semibold outline-none"
+              className="w-full min-w-0 bg-transparent text-4xl font-semibold outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
+            <Currency defaultCurrency="USD"/>
           </div>
         </div>
         <div className="flex justify-center py-6">
         <button
             type="button"
-            className="flex h-16 w-16 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-2xl">
+            className="flex h-14 w-14 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-2xl">
             <IoSwapVerticalOutline/>
         </button>
         </div>
@@ -28,6 +30,7 @@ export default function ExchangeInput() {
           <p className="text-sm uppercase text-neutral-400 mb-4">Receive</p>
             <div className="flex items-end justify-between gap-4">
             <span className="min-w-0 text-4xl font-semibold text-lime-400">0</span>
+            <Currency defaultCurrency="EUR"/>
           </div>
         </div>
       </div>

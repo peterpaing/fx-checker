@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @keyframes ticker {
   from {
     transform: translateX(0);
