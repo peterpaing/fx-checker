@@ -2,7 +2,8 @@
 
 import { useExchange } from "@/app/component/ExchangeContext"
 import { IoSwapVerticalOutline } from "react-icons/io5"
-import { FaRegStar } from "react-icons/fa6";
+import { FaRegStar } from "react-icons/fa6"
+import { VscArrowSwap } from "react-icons/vsc"
 import Currency from "@/app/component/Currency"
 import { useEffect, useState } from "react"
 
@@ -42,12 +43,14 @@ const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency
 
   return (
     <section className="w-full mt-8 px-4">
-      <h2 className="text-xl uppercase mb-6">Check the rate</h2>
+    <div className="w-full max-w-[1200px] mx-auto">
+      <h2 className="text-xl lg:text-2xl uppercase mb-4 lg:my-8">Check the rate</h2>
     
-    <div className="w-full max-w-2xl mx-auto rounded-3xl bg-neutral-900 p-6">
+    <div className="w-full md:w-[750px] lg:w-[1200px] mx-auto rounded-3xl bg-neutral-900 p-6">
+        <div className="md:flex md:gap-6 md:justify-between">
         <div className="rounded-2xl border border-neutral-700 bg-neutral-800 p-6">
-          <p className="text-sm uppercase text-neutral-400 mb-4">Send</p>
-        <div className="flex items-end justify-between gap-4">
+          <p className="text-sm lg:text-lg uppercase text-neutral-400 mb-4">Send</p>
+        <div className="md:w-[252px] lg:w-[450px] flex items-end justify-between gap-4">
             <input
               type="number"
               name="send"
@@ -59,27 +62,34 @@ const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency
             <Currency type="from" />
           </div>
         </div>
-        <div className="flex justify-center py-6">
+        <div className="flex justify-center py-4">
         <button
             type="button"
-            className="flex h-14 w-14 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-2xl">
+            className="md:hidden flex h-14 w-14 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-2xl">
             <IoSwapVerticalOutline/>
+        </button>
+        <button
+            type="button"
+            className="hidden md:flex w-16 h-16 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-3xl text-white">
+            <VscArrowSwap/>
         </button>
         </div>
         <div className="rounded-2xl border border-neutral-700 bg-neutral-800 p-6">
-          <p className="text-sm uppercase text-neutral-400 mb-4">Receive</p>
-            <div className="flex items-end justify-between gap-4">
+          <p className="text-sm lg:text-lg uppercase text-neutral-400 mb-4">Receive</p>
+            <div className="md:w-[252px] lg:w-[450px] flex items-end justify-between gap-4">
             <span className="min-w-0 text-4xl font-semibold text-lime-400">{receive.toFixed(2)}</span>
             <Currency type="to" />
           </div>
         </div>
-        <div className="mt-6 pt-4 text-center border-t-4 border-neutral-700 border-dashed">
-        <p className="text-sm ">{exchangeRate}</p>
-        <div className="mt-4 flex gap-4 justify-center">
-        <button className="py-2 px-4 bg-lime-500 text-neutral-900 flex items-center justify-center gap-2 rounded-xl"><FaRegStar/> FAVORITE</button>
-        <button className="py-2 px-4 border-2 border-lime-500 rounded-xl">LOG CONVERSION</button>
+        </div>
+        <div className="mt-6 md:pt-8 pt-4 text-center border-t-4 border-neutral-700 border-dashed md:flex md:justify-between md:items-center">
+        <p className="text-sm lg:text-lg">{exchangeRate}</p>
+        <div className="mt-4 md:mt-0 flex gap-4 justify-center">
+        <button className="py-2 px-4 bg-lime-500 text-neutral-900 flex items-center justify-center gap-2 rounded-xl lg:text-lg"><FaRegStar/> FAVORITE</button>
+        <button className="py-2 px-4 border-2 border-lime-500 rounded-xl whitespace-nowrap lg:text-lg">LOG CONVERSION</button>
         </div>
         </div>
+      </div>
       </div>
     </section>
   )
