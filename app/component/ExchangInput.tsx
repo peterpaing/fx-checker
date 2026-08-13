@@ -20,7 +20,7 @@ const {
 
 const [rate, setRate] = useState(0)
 const [receiveAmount, setReceiveAmount] = useState("")
-const [activeInput, setActiveInput] = useState<"send" | "receive">("send")
+
 
 useEffect(() => {
   async function fetchRate() {
@@ -56,8 +56,7 @@ function swapCurrencies() {
 
 function handleSendChange(value: string) {
   setAmount(value)
-  setActiveInput("send")
-
+  
   if (rate && value) {
     setReceiveAmount((Number(value) * rate).toFixed(2))
   } else {
@@ -67,8 +66,7 @@ function handleSendChange(value: string) {
 
 function handleReceiveChange(value: string) {
   setReceiveAmount(value)
-  setActiveInput("receive")
-
+ 
   if (rate && value) {
     setAmount((Number(value) / rate).toFixed(2))
   } else {
@@ -91,7 +89,6 @@ function handleReceiveChange(value: string) {
             name="send"
             value={amount}
             placeholder="0.00"
-            onFocus={() => setActiveInput("send")}
             onChange={(e) => handleSendChange(e.target.value)}
             className="
               w-full min-w-0
@@ -139,7 +136,6 @@ function handleReceiveChange(value: string) {
             name="receive"
             value={receiveAmount}
             placeholder="0.00"
-            onFocus={() => setActiveInput("receive")}
             onChange={(e) => handleReceiveChange(e.target.value)}
             className="
               w-full min-w-0
