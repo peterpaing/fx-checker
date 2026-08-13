@@ -19,6 +19,8 @@ const {
 } = useExchange()
 
 const [rate, setRate] = useState(0)
+const [receiveAmount, setReceiveAmount] = useState("")
+const [activeInput, setActiveInput] = useState<"send" | "receive">("send")
 
 useEffect(() => {
   async function fetchRate() {
@@ -40,13 +42,38 @@ useEffect(() => {
   fetchRate()
 }, [fromCurrency, toCurrency])
 
-const receive = Number(amount || 0) * rate
 const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}` : "Loading..."
 
 function swapCurrencies() {
+  const oldAmount = amount
+  const oldReceiveAmount = receiveAmount
+
   setFromCurrency(toCurrency)
   setToCurrency(fromCurrency)
-  setAmount(receive.toFixed(2).toString())
+  setAmount(oldReceiveAmount)
+  setReceiveAmount(oldAmount)
+}
+
+function handleSendChange(value: string) {
+  setAmount(value)
+  setActiveInput("send")
+
+  if (rate && value) {
+    setReceiveAmount((Number(value) * rate).toFixed(2))
+  } else {
+    setReceiveAmount("")
+  }
+}
+
+function handleReceiveChange(value: string) {
+  setReceiveAmount(value)
+  setActiveInput("receive")
+
+  if (rate && value) {
+    setAmount((Number(value) / rate).toFixed(2))
+  } else {
+    setAmount("")
+  }
 }
 
   return (
@@ -64,10 +91,11 @@ function swapCurrencies() {
             name="send"
             value={amount}
             placeholder="0.00"
-            onChange={(e) => setAmount(e.target.value)}
+            onFocus={() => setActiveInput("send")}
+            onChange={(e) => handleSendChange(e.target.value)}
             className="
               w-full min-w-0
-              rounded-xl
+              rounded-lg
               bg-transparent
               text-2xl
               font-semibold
@@ -106,11 +134,30 @@ function swapCurrencies() {
         <div className="w-full md:w-[252px] mx-auto rounded-2xl border border-neutral-700 bg-neutral-800 p-4 md:p-5 lg:p-4">
           <p className="text-sm uppercase text-neutral-400 mb-3">Receive</p>
             <div className="w-full flex items-end justify-between gap-3">
-           <span
-            className="inline-block w-full min-w-0 pb-2 text-2xl font-semibold text-lime-400
-              overflow-x-auto overflow-y-hidden whitespace-nowrap [&::-webkit-scrollbar]:h-1
-              [&::-webkit-scrollbar-thumb]:bg-lime-400 [&::-webkit-scrollbar-thumb]:rounded-full
-              md:[&::-webkit-scrollbar]:h-2">{receive.toFixed(2)}</span>
+            <input
+            type="number"
+            name="receive"
+            value={receiveAmount}
+            placeholder="0.00"
+            onFocus={() => setActiveInput("receive")}
+            onChange={(e) => handleReceiveChange(e.target.value)}
+            className="
+              w-full min-w-0
+              rounded-lg
+              bg-transparent
+              text-2xl
+              font-semibold
+              text-lime-400
+              outline-none
+              focus:ring-2
+              focus:ring-lime-400
+              focus:ring-offset-2
+              focus:ring-offset-black
+              [appearance:textfield]
+              [&::-webkit-outer-spin-button]:appearance-none
+              [&::-webkit-inner-spin-button]:appearance-none
+            "
+          />
             <Currency type="to" />
           </div>
           </div>
