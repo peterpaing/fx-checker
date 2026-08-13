@@ -85,8 +85,8 @@ const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency
         <div className="mt-6 md:pt-8 pt-4 text-center border-t-4 border-neutral-700 border-dashed md:flex md:justify-between md:items-center">
         <p className="text-sm lg:text-lg">{exchangeRate}</p>
         <div className="mt-4 md:mt-0 flex gap-4 justify-center">
-        <button className="py-2 px-4 bg-lime-500 text-neutral-900 flex items-center justify-center gap-2 rounded-xl lg:text-lg"><FaRegStar/> FAVORITE</button>
-        <button className="py-2 px-4 border-2 border-lime-500 rounded-xl whitespace-nowrap lg:text-lg">LOG CONVERSION</button>
+        <button className="py-2 px-4 md:py-3 md:px-4 lg:py-4 lg:px-5 bg-lime-500 text-neutral-900 flex items-center justify-center gap-2 rounded-xl lg:text-lg leading-none"><FaRegStar/> FAVORITE</button>
+        <button className="py-2 px-4 md:py-3 md:px-4 lg:py-4 lg:px-5 border-2 border-lime-500 rounded-xl whitespace-nowrap lg:text-lg leading-none">LOG CONVERSION</button>
         </div>
         </div>
       </div>
