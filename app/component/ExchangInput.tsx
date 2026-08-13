@@ -14,6 +14,8 @@ const {
   fromCurrency,
   toCurrency,
   setAmount,
+  setFromCurrency,
+  setToCurrency,
 } = useExchange()
 
 const [rate, setRate] = useState(0)
@@ -41,6 +43,12 @@ useEffect(() => {
 const receive = Number(amount || 0) * rate
 const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}` : "Loading..."
 
+function swapCurrencies() {
+  setFromCurrency(toCurrency)
+  setToCurrency(fromCurrency)
+  setAmount(receive.toFixed(2).toString())
+}
+
   return (
     <section className="w-full mt-8 px-4">
     <div className="w-full max-w-[1200px] mx-auto">
@@ -65,11 +73,13 @@ const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency
         <div className="flex justify-center py-4">
         <button
             type="button"
+            onClick={swapCurrencies}
             className="md:hidden flex h-14 w-14 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-2xl">
             <IoSwapVerticalOutline/>
         </button>
         <button
             type="button"
+            onClick={swapCurrencies}
             className="hidden md:flex w-16 h-16 items-center justify-center rounded-xl border border-neutral-800 bg-neutral-700 text-3xl text-white">
             <VscArrowSwap/>
         </button>
