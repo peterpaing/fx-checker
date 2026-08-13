@@ -24,7 +24,7 @@ export default function CurrencySelector({type}: CurrencySelectorProps) {
 
 const selectedCode = type === "from" ? fromCurrency : toCurrency
 
-const selectedCurrency =currencies.find((currency) => currency.code === selectedCode) ??currencies[0]
+const selectedCurrency = currencies.find((currency) => currency.code === selectedCode) ?? currencies[0]
 
   function handleToggle() {
     setIsOpen((prev) => !prev)
@@ -58,16 +58,17 @@ function handleSelect(currency: Currency) {
   return (
     <div className="relative">
       <button
-        type="button"
-        onClick={handleToggle}
-        className="flex items-center gap-3 rounded-xl bg-neutral-700 px-4 py-3"
-      >
-       <span>{selectedCurrency.code}</span>
-        <span><MdArrowDropDown className="text-xl"/></span>
-      </button>
+      type="button"
+      onClick={handleToggle}
+      className="flex items-center gap-1 rounded-lg bg-neutral-700 px-3 py-1
+      focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
+    >
+      <span className="text-base">{selectedCurrency.code}</span>
+      <span><MdArrowDropDown className="text-base"/></span>
+    </button>
 
       {isOpen && (
-        <div className=" absolute right-0 top-full mt-8 z-50 w-80 rounded-xl bg-neutral-800 p-3">
+        <div className="absolute right-0 top-full mt-8 z-50 w-72 rounded-xl bg-neutral-800 p-3">
             <div className="relative">
             <IoSearch className="absolute mt-4 ml-2 text-lg"/>
           <input
@@ -97,7 +98,8 @@ function handleSelect(currency: Currency) {
                   key={currency.code}
                   type="button"
                   onClick={() => handleSelect(currency)}
-                  className="flex w-full items-center gap-4 rounded-lg p-3 text-left"
+                  className="flex w-full items-center gap-4 rounded-lg p-3 text-left
+                  focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
                 >
                 <span>{currency.code}</span>
                 <span className="text-neutral-400">{currency.name}</span>

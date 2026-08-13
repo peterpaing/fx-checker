@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+html::-webkit-scrollbar {
+  width: 7px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #171717;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #65a30d;
+  border-radius: 9999px;
+}
 
 @keyframes ticker {
   from {

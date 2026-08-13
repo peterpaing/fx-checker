@@ -10,7 +10,7 @@ return (
         </svg>
         <h1 className="text-sm md:text-base font-bold">FX_CHECKER</h1>
         </div>
-        <ul className="flex items-center gap-1 md:gap-2 text-sm md:text-base uppercase text-neutral-400 whitespace-nowrap">
+        <ul className="flex items-center gap-1 md:gap-2 text-sm uppercase text-neutral-400 whitespace-nowrap">
         <li className="flex items-center gap-1 md:gap-2 after:content-['•']">55 Currencies</li>
         <li className="flex items-center gap-1 md:gap-2 after:content-['•']">Eod</li>
         <li className="flex items-center gap-1 md:gap-2">Ecb Data</li>
