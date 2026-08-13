@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from '@/app/component/Header'
 import { ExchangeProvider } from "@/app/component/ExchangeContext"
 import ExchangeInput from '@/app/component/ExchangInput'
+import Navbar from '@/app/component/Navbar'
+import NavSelect from '@/app/component/NavSelect'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -20,6 +22,8 @@ export default function RootLayout({ children }: {children: React.ReactNode}) {
         <Header/>
         <ExchangeProvider>
         <ExchangeInput/>
+        <Navbar/>
+        <NavSelect/>
         {children}
       </ExchangeProvider>
       </body>
