@@ -2,6 +2,7 @@
 
 import { useExchange } from "@/app/component/ExchangeContext"
 import { IoSwapVerticalOutline } from "react-icons/io5"
+import { FaRegStar } from "react-icons/fa6";
 import Currency from "@/app/component/Currency"
 import { useEffect, useState } from "react"
 
@@ -37,6 +38,7 @@ useEffect(() => {
 }, [fromCurrency, toCurrency])
 
 const receive = Number(amount || 0) * rate
+const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}` : "Loading..."
 
   return (
     <section className="w-full mt-8 px-4">
@@ -70,6 +72,13 @@ const receive = Number(amount || 0) * rate
             <span className="min-w-0 text-4xl font-semibold text-lime-400">{receive.toFixed(2)}</span>
             <Currency type="to" />
           </div>
+        </div>
+        <div className="mt-6 pt-4 text-center border-t-4 border-neutral-700 border-dashed">
+        <p className="text-sm ">{exchangeRate}</p>
+        <div className="mt-4 flex gap-4 justify-center">
+        <button className="py-2 px-4 bg-lime-500 text-neutral-900 flex items-center justify-center gap-2 rounded-xl"><FaRegStar/> FAVORITE</button>
+        <button className="py-2 px-4 border-2 border-lime-500 rounded-xl">LOG CONVERSION</button>
+        </div>
         </div>
       </div>
     </section>
