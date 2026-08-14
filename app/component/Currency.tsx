@@ -68,7 +68,7 @@ function handleSelect(currency: Currency) {
     </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-8 z-50 w-72 rounded-xl bg-neutral-800 p-3">
+        <div className="absolute right-0 top-full mt-6 z-50 w-72 rounded-xl bg-neutral-800 p-3">
             <div className="relative">
             <IoSearch className="absolute mt-4 ml-2 text-lg"/>
           <input

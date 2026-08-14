@@ -1,0 +1,83 @@
+"use client"
+
+import { useExchange } from "@/app/component/ExchangeContext"
+import { useEffect, useState } from "react"
+
+type MarketRate = {
+  base: string
+  quote: string
+  date: string
+  rate: number
+}
+
+export default function MarketStats(){
+
+  const { fromCurrency, toCurrency } = useExchange()
+  const [marketStats,setMarketStats] = useState<MarketRate[]>([])
+
+  const today = new Date()
+  const previousDay = new Date(today)
+
+  previousDay.setDate(today.getDate() - 1)
+
+  const todayString = today.toISOString().split("T")[0]
+  const previousDayString = previousDay.toISOString().split("T")[0]
+
+  useEffect(() => {
+    async function marketRate() {
+      const res = await fetch(
+        `https://api.frankfurter.dev/v2/rates?base=${fromCurrency}&quotes=${toCurrency}&from=${previousDayString}&to=${todayString}`
+      )
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch rate: ${res.status}`)
+      }
+
+      const data = await res.json()
+
+      console.log(data)
+      setMarketStats(data)
+    }
+
+    marketRate()
+  }, [fromCurrency, toCurrency])
+
+  const open = marketStats[0]?.rate ?? 0
+  const last = marketStats[marketStats.length - 1]?.rate ?? 0
+  const change = last - open
+  const percentChange = open ? (change / open) * 100 : 0
+
+  const stats = [
+    {
+      label: "OPEN",
+      value: open.toFixed(4),
+    },
+    {
+      label: "LAST",
+      value: last.toFixed(4),
+    },
+    {
+      label: "CHANGE",
+      value: `${change >= 0 ? "+" : ""}${change.toFixed(4)}`,
+      color: change >= 0 ? "text-lime-400" : "text-red-400"
+    },
+    {
+      label: "% CHANGE",
+      value: `${percentChange >= 0 ? "▲ +" : "▼ "}${percentChange.toFixed(2)}%`,
+      color: change >= 0 ? "text-lime-400" : "text-red-400"
+    }
+  ]
+
+  return (
+    <section className="w-full max-w-[1036px] mx-auto mt-6">
+      <div className="flex justify-between items-center">
+        {stats.map((stat) => (
+          <div key={stat.label}className="w-[100px] h-[71px] flex flex-col items-center rounded-xl bg-neutral-900 p-4">
+            <p className="text-xs text-neutral-400"> {stat.label}</p>
+            <p className={`mt-2 text-sm whitespace-nowrap ${stat.color ?? ""}`}>{stat.value}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}

@@ -76,12 +76,12 @@ function handleReceiveChange(value: string) {
 
   return (
     <section className="w-full mt-8 px-4">
-    <div className="w-full max-w-[440px] md:max-w-[600px] mx-auto">
+    <div className="w-full max-w-[440px] md:max-w-[1036px] mx-auto">
       <h2 className="text-base uppercase mb-4 lg:my-4">Check the rate</h2>
     
-    <div className="w-full max-w-[440px] md:max-w-[600px] mx-auto rounded-3xl bg-neutral-900 p-4 md:p-5">
+    <div className="w-full max-w-[440px] md:max-w-[1036px] mx-auto rounded-3xl bg-neutral-900 p-4 md:p-5">
         <div className="md:flex md:gap-4 md:justify-between md:items-center">
-        <div className="w-full md:w-[252px] mx-auto rounded-2xl border border-neutral-700 bg-neutral-800 p-4 md:p-5 lg:p-4">
+        <div className="w-full md:w-[450px] mx-auto rounded-2xl border border-neutral-700 bg-neutral-800 p-4 md:p-5 lg:p-4">
           <p className="text-sm uppercase text-neutral-400 mb-3">Send</p>
         <div className="w-full flex items-end justify-between gap-3">
             <input
@@ -128,7 +128,7 @@ function handleReceiveChange(value: string) {
       </button>
         </div>
 
-        <div className="w-full md:w-[252px] mx-auto rounded-2xl border border-neutral-700 bg-neutral-800 p-4 md:p-5 lg:p-4">
+        <div className="w-full md:w-[450px] mx-auto rounded-2xl border border-neutral-700 bg-neutral-800 p-4 md:p-5 lg:p-4">
           <p className="text-sm uppercase text-neutral-400 mb-3">Receive</p>
             <div className="w-full flex items-end justify-between gap-3">
             <input
