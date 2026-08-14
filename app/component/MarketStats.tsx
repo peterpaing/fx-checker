@@ -14,6 +14,8 @@ export default function MarketStats(){
 
   const { fromCurrency, toCurrency } = useExchange()
   const [marketStats,setMarketStats] = useState<MarketRate[]>([])
+  const [range, setRange] = useState("1M")
+  const ranges = ["1D", "1W", "1M", "3M", "1Y", "5Y"]
 
   const today = new Date()
   const previousDay = new Date(today)
@@ -69,8 +71,9 @@ export default function MarketStats(){
   ]
 
   return (
-    <section className="w-full lg:mx-auto md:px-6 md:w-[650px] lg:w-[1036px] p-2 my-6">
-      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2">
+    <section className="w-full lg:mx-auto md:px-6 md:w-[650px] lg:w-[1036px] py-2 px-4 my-6">
+        <div className="lg:flex lg:items-center justify-between">
+      <div className="w-full lg:w-3/5 grid grid-cols-2 md:grid-cols-4 gap-2">
         {stats.map((stat) => (
           <div key={stat.label}className="w-full md:w-[140px] md:h-[81px] p-4 flex flex-col items-center justify-center rounded-xl bg-neutral-900">
             <p className="text-xs text-neutral-400"> {stat.label}</p>
@@ -78,6 +81,24 @@ export default function MarketStats(){
           </div>
         ))}
       </div>
+
+      <div className="w-[286px] mt-5 lg:mt-0 flex rounded-lg bg-neutral-900 p-1">
+        {ranges.map((item) => (
+            <button
+            key={item}
+            type="button"
+            onClick={() => setRange(item)}
+            className={`px-4 py-2 text-xs rounded-md ${
+                range === item
+                ? "bg-neutral-700 text-white"
+                : "text-neutral-400"
+            }`}
+            >
+            {item}
+            </button>
+        ))}
+        </div>
+        </div>
     </section>
   )
 }
