@@ -62,12 +62,12 @@ export default function History(){
     {
       label: "CHANGE",
       value: `${change >= 0 ? "+" : ""}${change.toFixed(4)}`,
-      color: change >= 0 ? "text-lime-400" : "text-red-400"
+      color: change >= 0 ? "text-green-500" : "text-red-400"
     },
     {
       label: "% CHANGE",
       value: `${percentChange >= 0 ? "▲ +" : "▼ "}${percentChange.toFixed(2)}%`,
-      color: change >= 0 ? "text-lime-400" : "text-red-400"
+      color: change >= 0 ? "text-green-500" : "text-red-400"
     }
   ]
 
@@ -94,7 +94,8 @@ export default function History(){
                 range === item
                 ? "bg-neutral-700 text-white"
                 : "text-neutral-400"
-            }`}
+            }
+            rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-black p-2`}
             >
             {item}
             </button>
