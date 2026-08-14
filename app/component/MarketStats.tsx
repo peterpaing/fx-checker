@@ -2,6 +2,7 @@
 
 import { useExchange } from "@/app/component/ExchangeContext"
 import { useEffect, useState } from "react"
+import MarketChart from "@/app/component/MarketChart"
 
 type MarketRate = {
   base: string
@@ -10,7 +11,7 @@ type MarketRate = {
   rate: number
 }
 
-export default function MarketStats(){
+export default function History(){
 
   const { fromCurrency, toCurrency } = useExchange()
   const [marketStats,setMarketStats] = useState<MarketRate[]>([])
@@ -71,7 +72,8 @@ export default function MarketStats(){
   ]
 
   return (
-    <section className="w-full lg:mx-auto md:px-6 md:w-[650px] lg:w-[1036px] py-2 px-4 my-6">
+    <section className="w-full max-w-[1036px] lg:mx-auto">
+    <div className="w-full md:px-6 md:w-[650px] lg:w-[1036px] py-2 px-4 my-6">
         <div className="lg:flex lg:items-center justify-between">
       <div className="w-full lg:w-3/5 grid grid-cols-2 md:grid-cols-4 gap-2">
         {stats.map((stat) => (
@@ -99,6 +101,8 @@ export default function MarketStats(){
         ))}
         </div>
         </div>
+    </div>
+    <MarketChart range={range} />
     </section>
   )
 }
