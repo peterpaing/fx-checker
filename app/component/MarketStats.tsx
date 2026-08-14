@@ -69,10 +69,10 @@ export default function MarketStats(){
   ]
 
   return (
-    <section className="w-full max-w-[1036px] mx-auto mt-6">
-      <div className="flex justify-between items-center">
+    <section className="w-full lg:mx-auto md:px-6 md:w-[650px] lg:w-[1036px] p-2 my-6">
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2">
         {stats.map((stat) => (
-          <div key={stat.label}className="w-[100px] h-[71px] flex flex-col items-center rounded-xl bg-neutral-900 p-4">
+          <div key={stat.label}className="w-full md:w-[140px] md:h-[81px] p-4 flex flex-col items-center justify-center rounded-xl bg-neutral-900">
             <p className="text-xs text-neutral-400"> {stat.label}</p>
             <p className={`mt-2 text-sm whitespace-nowrap ${stat.color ?? ""}`}>{stat.value}</p>
           </div>
