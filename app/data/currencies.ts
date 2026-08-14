@@ -1,113 +1,113 @@
 export type Currency = {
-  code: string;
-  name: string;
-  flag: string;
+  code: string
+  name: string
+  flag: string
 }
 
-export const currencies:Currency[]= [
+export const currencies: Currency[] = [
   {
     code: "USD",
     name: "American Dollar",
-    flag: "🇺🇸",
+    flag: "/flags/us.webp"
   },
   {
     code: "EUR",
     name: "Euro",
-    flag: "🇪🇺",
+    flag: "/flags/eu.webp"
   },
   {
     code: "GBP",
     name: "British Pound",
-    flag: "🇬🇧",
+    flag: "/flags/gb.webp"
   },
   {
     code: "JPY",
     name: "Japanese Yen",
-    flag: "🇯🇵",
+    flag: "/flags/jp.webp"
   },
   {
     code: "CHF",
     name: "Swiss Franc",
-    flag: "🇨🇭",
+    flag: "/flags/ch.webp"
   },
   {
     code: "AUD",
     name: "Australian Dollar",
-    flag: "🇦🇺",
+    flag: "/flags/au.webp"
   },
   {
     code: "CAD",
     name: "Canadian Dollar",
-    flag: "🇨🇦",
+    flag: "/flags/ca.webp"
   },
   {
     code: "NZD",
     name: "New Zealand Dollar",
-    flag: "🇳🇿",
+    flag: "/flags/nz.webp"
   },
   {
     code: "CNY",
     name: "Chinese Yuan",
-    flag: "🇨🇳",
+    flag: "/flags/cn.webp"
   },
   {
     code: "HKD",
     name: "Hong Kong Dollar",
-    flag: "🇭🇰",
+    flag: "/flags/hk.webp"
   },
   {
     code: "SGD",
     name: "Singapore Dollar",
-    flag: "🇸🇬",
+    flag: "/flags/sg.webp"
   },
   {
     code: "KRW",
     name: "South Korean Won",
-    flag: "🇰🇷",
+    flag: "/flags/kr.webp"
   },
   {
     code: "INR",
     name: "Indian Rupee",
-    flag: "🇮🇳",
+    flag: "/flags/in.webp"
   },
   {
     code: "THB",
     name: "Thai Baht",
-    flag: "🇹🇭",
+    flag: "/flags/th.webp"
   },
   {
     code: "MYR",
     name: "Malaysian Ringgit",
-    flag: "🇲🇾",
+    flag: "/flags/my.webp"
   },
   {
     code: "PHP",
     name: "Philippine Peso",
-    flag: "🇵🇭",
+    flag: "/flags/ph.webp"
   },
   {
     code: "IDR",
     name: "Indonesian Rupiah",
-    flag: "🇮🇩",
+    flag: "/flags/id.webp"
   },
   {
     code: "SEK",
     name: "Swedish Krona",
-    flag: "🇸🇪",
+    flag: "/flags/se.webp"
   },
   {
     code: "NOK",
     name: "Norwegian Krone",
-    flag: "🇳🇴",
+    flag: "/flags/no.webp"
   },
   {
     code: "DKK",
     name: "Danish Krone",
-    flag: "🇩🇰",
+    flag: "/flags/dk.webp"
   },
   {
     code: "PLN",
     name: "Polish Zloty",
-    flag: "🇵🇱",
-  },
+    flag: "/flags/pl.webp"
+  }
 ]

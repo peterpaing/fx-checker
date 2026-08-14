@@ -5,6 +5,7 @@ import { useState } from "react"
 import { currencies, type Currency } from "@/app/data/currencies"
 import { IoSearch } from "react-icons/io5"
 import { MdArrowDropDown } from "react-icons/md"
+import Image from "next/image"
 
 type CurrencySelectorProps = {
   type: "from" | "to"
@@ -60,11 +61,18 @@ function handleSelect(currency: Currency) {
       <button
       type="button"
       onClick={handleToggle}
-      className="flex items-center gap-1 rounded-lg bg-neutral-700 px-3 py-1
+      className="w-[96px] flex items-center gap-1 rounded-lg bg-neutral-700 px-3 py-1
       focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
     >
-      <span className="text-base">{selectedCurrency.code}</span>
-      <span><MdArrowDropDown className="text-base"/></span>
+      <Image
+        src={selectedCurrency.flag}
+        alt={selectedCurrency.code}
+        width={20}
+        height={20}
+        className="rounded-full mr-1"
+      />
+      <span className="text-base lg:mt-1">{selectedCurrency.code}</span>
+      <span><MdArrowDropDown className="text-xl lg:mt-1"/></span>
     </button>
 
       {isOpen && (
@@ -101,6 +109,13 @@ function handleSelect(currency: Currency) {
                   className="flex w-full items-center gap-4 rounded-lg p-3 text-left
                   focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
                 >
+                <Image
+                  src={currency.flag}
+                  alt={currency.code}
+                  width={20}
+                  height={20}
+                  className="rounded-full mr-1"
+                />
                 <span>{currency.code}</span>
                 <span className="text-neutral-400">{currency.name}</span>
                 {selectedCurrency.code === currency.code && (
