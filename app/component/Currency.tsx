@@ -72,7 +72,7 @@ function handleSelect(currency: Currency) {
         className="rounded-full mr-1"
       />
       <span className="text-base lg:mt-1">{selectedCurrency.code}</span>
-      <span><MdArrowDropDown className="text-xl lg:mt-1"/></span>
+      <span><MdArrowDropDown className={`text-xl lg:mt-1 ${isOpen ? "rotate-180" : ""}`}/></span>
     </button>
 
       {isOpen && (
