@@ -70,7 +70,7 @@ export default function Favorite() {
 
   if (!favorites.length) {
     return (
-      <div className="w-[460px] mx-auto text-center my-18">
+      <div className="w-full max-w-[460px] p-4 mx-auto text-center my-10 md:my-18">
         <h3 className="text-base mb-4">No pinned pairs yet</h3>
         <p className="text-sm text-neutral-400">Pin a pair to track its rate here. Tap the star icon on any conversion or comparison row.</p>
         </div>
