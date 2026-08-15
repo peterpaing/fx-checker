@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 html::-webkit-scrollbar {
-  width: 7px;
+  width: 5px;
 }
 
 html::-webkit-scrollbar-track {

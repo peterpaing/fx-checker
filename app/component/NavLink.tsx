@@ -8,7 +8,8 @@ export default function NavLink({ href, children }: { href: string; children: Re
 
   return (
     <li>
-      <Link href={href} className={`${isActive} rounded-xl focus:outline-none focus-visible:ring-2  focus:ring-lime-400 focus:ring-offset-black p-2`}>
+      <Link href={href} className={`${isActive} rounded-xl hover:text-lime-300 focus:outline-none
+       focus-visible:ring-2  focus:ring-lime-400 focus:ring-offset-black p-2 transition-colors duration-300 ease-in-out`}>
         {children}
       </Link>
       </li>

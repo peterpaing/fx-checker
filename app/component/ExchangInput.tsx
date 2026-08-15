@@ -97,10 +97,8 @@ function handleReceiveChange(value: string) {
               text-2xl
               font-semibold
               outline-none
-              focus-visible:ring-2 
+              focus:ring-1 
               focus:ring-lime-400
-              focus:ring-offset-2
-              focus:ring-offset-black
               [appearance:textfield]
               [&::-webkit-outer-spin-button]:appearance-none
               [&::-webkit-inner-spin-button]:appearance-none
@@ -114,7 +112,7 @@ function handleReceiveChange(value: string) {
             type="button"
             onClick={swapCurrencies}
             className="md:hidden flex h-12 w-12 items-center justify-center rounded-xl
-            border border-neutral-800 bg-neutral-700 text-xl
+            border border-neutral-800 bg-neutral-700 text-xl transition-colors duration-200 ease-in-out hover:bg-neutral-600
             focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black">
             <IoSwapVerticalOutline/>
         </button>
@@ -122,7 +120,7 @@ function handleReceiveChange(value: string) {
         type="button"
         onClick={swapCurrencies}
         className="hidden md:flex w-12 h-12 items-center justify-center
-        rounded-xl border border-neutral-800 bg-neutral-700 text-xl text-white
+        rounded-xl border border-neutral-800 bg-neutral-700 text-xl text-white transition-colors duration-300 ease-in-out hover:bg-neutral-600
         focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black">
         <VscArrowSwap/>
       </button>
@@ -143,12 +141,9 @@ function handleReceiveChange(value: string) {
               bg-transparent
               text-2xl
               font-semibold
-              text-lime-400
               outline-none
-              focus-visible:ring-2 
+              focus:ring-1 
               focus:ring-lime-400
-              focus:ring-offset-2
-              focus:ring-offset-black
               [appearance:textfield]
               [&::-webkit-outer-spin-button]:appearance-none
               [&::-webkit-inner-spin-button]:appearance-none
@@ -165,11 +160,11 @@ function handleReceiveChange(value: string) {
 
         <button className="py-2 px-3 bg-lime-400
          text-neutral-900 flex items-center justify-center gap-2 rounded-lg text-sm
-         leading-none hover:bg-lime-500 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
+         leading-none transition-colors duration-300 ease-in-out hover:bg-lime-600 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
          focus:ring-offset-2 focus:ring-offset-black"><FaRegStar/> FAVORITE</button>
 
         <button className="py-2 px-3 border-2 border-lime-400
-        rounded-lg whitespace-nowrap text-sm leading-none hover:border-lime-500
+        rounded-lg whitespace-nowrap text-sm leading-none hover:border-lime-600 transition-colors duration-300 ease-in-out
         hover:text-neutral-300 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
         focus:ring-offset-2 focus:ring-offset-black">LOG CONVERSION</button>
         </div>

@@ -61,7 +61,7 @@ function handleSelect(currency: Currency) {
       <button
       type="button"
       onClick={handleToggle}
-      className="w-[96px] flex items-center gap-1 rounded-lg bg-neutral-700 px-3 py-1
+      className="w-[96px] flex items-center gap-1 rounded-lg bg-neutral-700 px-3 py-1 transition-colors duration-300 ease-in-out hover:bg-neutral-600
       focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
     >
       <Image

@@ -73,10 +73,10 @@ const changes: Change[] = currentRates.map((current) => {
     return (
         <section className="flex items-center text-sm">
             <h2 className="py-2 px-4 bg-lime-400 text-neutral-900 font-semibold whitespace-nowrap uppercase">Live Market</h2>
-            <div className="flex-1 gap-2 overflow-x-auto bg-neutral-800 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="flex-1 gap-2 overflow-x-auto bg-neutral-900 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <div className="flex w-max animate-ticker">
                 {changes.map((item) => (
-          <div key={item.currency} className="p-2 border-r-2 border-neutral-600 flex items-center gap-2">
+          <div key={item.currency} className="p-2 border-r-2 border-neutral-700 flex items-center gap-2">
             <span className="text-neutral-300">USD/{item.currency}</span>
             <span>{item.currentRate}</span>
             <span className={`whitespace-nowrap ${item.percentageChange >= 0 ?'text-green-500' :'text-red-500'}`}>
