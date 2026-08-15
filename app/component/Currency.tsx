@@ -62,7 +62,7 @@ function handleSelect(currency: Currency) {
       type="button"
       onClick={handleToggle}
       className="w-[96px] flex items-center gap-1 rounded-lg bg-neutral-700 px-3 py-1
-      focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
+      focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
     >
       <Image
         src={selectedCurrency.flag}
@@ -107,7 +107,7 @@ function handleSelect(currency: Currency) {
                   type="button"
                   onClick={() => handleSelect(currency)}
                   className="flex w-full items-center gap-4 rounded-lg p-3 text-left
-                  focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
+                  focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-black"
                 >
                 <Image
                   src={currency.flag}

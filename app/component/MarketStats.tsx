@@ -95,7 +95,7 @@ export default function History(){
                 ? "bg-neutral-700 text-white"
                 : "text-neutral-400"
             }
-            rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-black p-2`}
+            rounded-xl focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-black p-2`}
             >
             {item}
             </button>
