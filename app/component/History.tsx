@@ -77,9 +77,9 @@ export default function History(){
         <div className="lg:flex lg:items-center justify-between">
       <div className="w-full lg:w-3/5 grid grid-cols-2 md:grid-cols-4 gap-2">
         {stats.map((stat) => (
-          <div key={stat.label}className="w-full md:w-[140px] md:h-[81px] p-4 flex flex-col items-center justify-center rounded-xl bg-neutral-900">
+          <div key={stat.label}className="w-full md:w-[140px] md:h-[81px] p-4 rounded-xl bg-neutral-900">
             <p className="text-xs text-neutral-400"> {stat.label}</p>
-            <p className={`mt-2 text-sm whitespace-nowrap ${stat.color ?? ""}`}>{stat.value}</p>
+            <p className={`mt-2 text-base whitespace-nowrap ${stat.color ?? ""}`}>{stat.value}</p>
           </div>
         ))}
       </div>

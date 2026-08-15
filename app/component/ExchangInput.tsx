@@ -3,9 +3,16 @@
 import { useExchange } from "@/app/component/ExchangeContext"
 import { IoSwapVerticalOutline } from "react-icons/io5"
 import { FaRegStar } from "react-icons/fa6"
+import { FaStar } from "react-icons/fa6"
 import { VscArrowSwap } from "react-icons/vsc"
 import Currency from "@/app/component/Currency"
 import { useEffect, useState } from "react"
+import {toggleFavorite,getFavorites} from "@/app/lib/favorites"
+
+type Favorite = {
+  fromCurrency: string
+  toCurrency: string
+}
 
 export default function ExchangeInput() {
 
@@ -18,8 +25,9 @@ const {
   setToCurrency,
 } = useExchange()
 
-const [rate, setRate] = useState(0)
-const [receiveAmount, setReceiveAmount] = useState("")
+const [rate,setRate] = useState(0)
+const [receiveAmount,setReceiveAmount] = useState("")
+const [favorites,setFavorites] = useState<Favorite[]>([])
 
 
 useEffect(() => {
@@ -28,19 +36,27 @@ useEffect(() => {
       `https://api.frankfurter.dev/v2/rates?base=${fromCurrency}&quotes=${toCurrency}`
     )
 
-    if (!res.ok) {
+    if(!res.ok){
       throw new Error(`Failed to fetch rate: ${res.status}`)
     }
 
     const data = await res.json()
 
-    console.log(data)
-
     setRate(data[0]?.rate ?? 0)
   }
 
   fetchRate()
-}, [fromCurrency, toCurrency])
+},[fromCurrency,toCurrency])
+
+  useEffect(() => {
+  setFavorites(getFavorites())
+},[])
+
+const isFavorite = favorites.some(
+  (favorite) =>
+    favorite.fromCurrency === fromCurrency &&
+    favorite.toCurrency === toCurrency
+)
 
 const exchangeRate = rate ? `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}` : "Loading..."
 
@@ -72,6 +88,11 @@ function handleReceiveChange(value: string) {
   } else {
     setAmount("")
   }
+}
+
+function handleFavorite() {
+  const updatedFavorites = toggleFavorite(fromCurrency,toCurrency)
+  setFavorites(updatedFavorites)
 }
 
   return (
@@ -155,16 +176,26 @@ function handleReceiveChange(value: string) {
         </div>
 
         <div className="mt-5 md:pt-6 pt-4 text-center border-t-2 border-neutral-700 border-dashed md:flex md:justify-between md:items-center">
-        <p className="text-sm">{exchangeRate}</p>
+        <p className="text-xs">{exchangeRate}</p>
         <div className="mt-4 md:mt-0 flex gap-3 justify-center">
 
-        <button className="py-2 px-3 bg-lime-400
-         text-neutral-900 flex items-center justify-center gap-2 rounded-lg text-sm
+        <button onClick={handleFavorite} className="w-[117px] h-[32px] bg-lime-400
+         text-neutral-900 flex items-center justify-center gap-2 rounded-lg text-xs
          leading-none transition-colors duration-300 ease-in-out hover:bg-lime-600 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
-         focus:ring-offset-2 focus:ring-offset-black"><FaRegStar/> FAVORITE</button>
+         focus:ring-offset-2 focus:ring-offset-black">{isFavorite?(
+          <>
+          <FaStar/>
+         FAVORITED
+         </>
+        ) :
+         (<>
+         <FaRegStar/>
+          FAVORITE
+         </>
+         )}</button>
 
-        <button className="py-2 px-3 border-2 border-lime-400
-        rounded-lg whitespace-nowrap text-sm leading-none hover:border-lime-600 transition-colors duration-300 ease-in-out
+        <button className="w-[132px] h-[32px] border-2 border-lime-400
+        rounded-lg whitespace-nowrap text-xs leading-none hover:border-lime-600 transition-colors duration-300 ease-in-out
         hover:text-neutral-300 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
         focus:ring-offset-2 focus:ring-offset-black">LOG CONVERSION</button>
         </div>
