@@ -62,12 +62,12 @@ export default function History(){
     {
       label: "CHANGE",
       value: `${change >= 0 ? "+" : ""}${change.toFixed(4)}`,
-      color: change >= 0 ? "text-green-500" : "text-red-400"
+      color: change >= 0 ? "text-green-500" : "text-red-500"
     },
     {
       label: "% CHANGE",
       value: `${percentChange >= 0 ? "▲ +" : "▼ "}${percentChange.toFixed(2)}%`,
-      color: change >= 0 ? "text-green-500" : "text-red-400"
+      color: change >= 0 ? "text-green-500" : "text-red-500"
     }
   ]
 

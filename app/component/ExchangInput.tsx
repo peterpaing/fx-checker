@@ -7,15 +7,8 @@ import { FaStar } from "react-icons/fa6"
 import { VscArrowSwap } from "react-icons/vsc"
 import Currency from "@/app/component/Currency"
 import { useEffect, useState } from "react"
-import {toggleFavorite,getFavorites} from "@/app/lib/favorites"
-
-type Favorite = {
-  fromCurrency: string
-  toCurrency: string
-}
 
 export default function ExchangeInput() {
-
 const {
   amount,
   fromCurrency,
@@ -23,11 +16,13 @@ const {
   setAmount,
   setFromCurrency,
   setToCurrency,
+  favorites,
+  handleFavorite
 } = useExchange()
 
 const [rate,setRate] = useState(0)
 const [receiveAmount,setReceiveAmount] = useState("")
-const [favorites,setFavorites] = useState<Favorite[]>([])
+
 
 
 useEffect(() => {
@@ -48,9 +43,7 @@ useEffect(() => {
   fetchRate()
 },[fromCurrency,toCurrency])
 
-  useEffect(() => {
-  setFavorites(getFavorites())
-},[])
+
 
 const isFavorite = favorites.some(
   (favorite) =>
@@ -90,12 +83,7 @@ function handleReceiveChange(value: string) {
   }
 }
 
-function handleFavorite() {
-  const updatedFavorites = toggleFavorite(fromCurrency,toCurrency)
-  setFavorites(updatedFavorites)
-}
-
-  return (
+ return (
     <section className="w-full mt-8 px-4">
     <div className="w-full max-w-[440px] md:max-w-[1036px] mx-auto">
       <h2 className="text-base uppercase mb-4 lg:my-4">Check the rate</h2>
@@ -179,7 +167,7 @@ function handleFavorite() {
         <p className="text-xs">{exchangeRate}</p>
         <div className="mt-4 md:mt-0 flex gap-3 justify-center">
 
-        <button onClick={handleFavorite} className="w-[117px] h-[32px] bg-lime-400
+        <button onClick={() => handleFavorite(fromCurrency, toCurrency)} className="w-[117px] h-[32px] bg-lime-400
          text-neutral-900 flex items-center justify-center gap-2 rounded-lg text-xs
          leading-none transition-colors duration-300 ease-in-out hover:bg-lime-600 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
          focus:ring-offset-2 focus:ring-offset-black">{isFavorite?(
