@@ -17,7 +17,9 @@ const {
   setFromCurrency,
   setToCurrency,
   favorites,
-  handleFavorite
+  logs,
+  handleFavorite,
+  handleLog
 } = useExchange()
 
 const [rate,setRate] = useState(0)
@@ -182,7 +184,7 @@ function handleReceiveChange(value: string) {
          </>
          )}</button>
 
-        <button className="w-[132px] h-[32px] border-2 border-lime-400
+        <button onClick={() => handleLog(fromCurrency, toCurrency,amount,receiveAmount)} className="w-[132px] h-[32px] border-2 border-lime-400
         rounded-lg whitespace-nowrap text-xs leading-none hover:border-lime-600 transition-colors duration-300 ease-in-out
         hover:text-neutral-300 focus:outline-none focus-visible:ring-2 focus:ring-lime-400
         focus:ring-offset-2 focus:ring-offset-black">LOG CONVERSION</button>
