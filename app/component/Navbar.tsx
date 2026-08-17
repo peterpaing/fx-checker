@@ -4,7 +4,7 @@ import NavLink from "@/app/component/NavLink"
 import { useExchange } from "@/app/component/ExchangeContext"
 
 export default function Navbar(){
-    const { favorites } = useExchange()
+    const { favorites,logs } = useExchange()
 
     return (
     <nav className="hidden md:block w-full mx-auto md:px-6 md:w-[600px] lg:w-[1036px]  border-b-2 border-b-neutral-800 ">
@@ -12,7 +12,7 @@ export default function Navbar(){
     <NavLink href="/">HISTORY</NavLink>
     <NavLink href="/compare">COMPARE</NavLink>
     <NavLink href="/favorites">FAVORITES <span className="bg-lime-900 px-2 py-1 rounded-full text-lime-400 text-xs">{favorites.length}</span></NavLink>
-    <NavLink href="/log">LOG</NavLink>
+    <NavLink href="/log">LOG <span className="bg-lime-900 px-2 py-1 rounded-full text-lime-400 text-xs">{logs.length}</span></NavLink>
     </ul>
     </nav>
     )

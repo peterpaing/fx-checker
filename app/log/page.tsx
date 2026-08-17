@@ -55,9 +55,9 @@ export default function Log() {
 
   return (
     <section className="w-6/7 max-w-[1036px] my-6 px-4 pt-2 pb-4 bg-neutral-900 mx-auto rounded-xl">
-    <div className="flex justify-between items-center px-4 pt-4">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 px-4 pt-4">
         <h3 className="text-base">CONVERSION LOG</h3>
-        <div className="flex items-center gap-6">
+        <div className="flex justify-between md:justify-end items-center gap-6">
         <p className="text-sm text-neutral-400">{logs.length} LOGGED</p>
         <button
         onClick={handleClearLogs}
@@ -65,7 +65,8 @@ export default function Log() {
             CLEAR ALL
         </button>
         </div>
-      </div>
+        </div>
+      
 
       {logs.map((log) => (
         <div key={log.id} className="p-4 flex justify-between items-center mt-4 bg-neutral-800 rounded-xl">

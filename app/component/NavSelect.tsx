@@ -8,7 +8,7 @@ import { useState } from "react"
 export default function NavSelect() {
   const pathname = usePathname()
   const router = useRouter()
-  const { favorites } = useExchange()
+  const { favorites,logs } = useExchange()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -16,7 +16,7 @@ export default function NavSelect() {
     { href: "/", label: "HISTORY" },
     { href: "/compare", label: "COMPARE" },
     { href: "/favorites", label: "FAVORITES", count: favorites.length },
-    { href: "/log", label: "LOG", count: 0 },
+    { href: "/log", label: "LOG", count: logs.length },
   ]
 
   const currentItem =
