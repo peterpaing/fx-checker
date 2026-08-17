@@ -18,7 +18,12 @@ export function saveLog(
   toCurrency: string,
   amount: string,
   receiveAmount: string,
-) {
+) : Log | undefined{
+
+  if (!amount) {
+    return
+  }
+
   const logs = getLogs()
 
   const newLog: Log = {
@@ -51,4 +56,8 @@ export function removeLog(id: string): Log[] {
   )
 
   return updatedLogs
+}
+
+export function clearLogs() {
+  localStorage.removeItem("logs")
 }

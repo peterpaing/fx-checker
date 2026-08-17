@@ -10,6 +10,7 @@ import {
   getLogs,
   saveLog,
   removeLog,
+  clearLogs,
   type Log,
 } from "@/app/lib/log"
 
@@ -30,6 +31,7 @@ type ExchangeContextType = {
     receiveAmount: string
   ) => void
   handleRemoveLog: (id: string) => void
+  handleClearLogs: () => void
 }
 
 const ExchangeContext = createContext<ExchangeContextType | null>(null)
@@ -69,18 +71,27 @@ export function ExchangeProvider({
     receiveAmount: string
   ) {
     const updateLog = saveLog(
-      fromCurrency,
-      toCurrency,
-      amount,
-      receiveAmount
-    )
+  fromCurrency,
+  toCurrency,
+  amount,
+  receiveAmount
+)
 
-    setLogs((currentLogs) => [...currentLogs, updateLog])
+  if (!updateLog) {
+    return
+  }
+
+  setLogs((currentLogs) => [...currentLogs, updateLog])
   }
 
   function handleRemoveLog(id: string) {
   const updatedLogs = removeLog(id)
   setLogs(updatedLogs)
+}
+
+function handleClearLogs() {
+  clearLogs()
+  setLogs([])
 }
 
   return (
@@ -96,7 +107,8 @@ export function ExchangeProvider({
         setToCurrency,
         handleFavorite,
         handleLog,
-        handleRemoveLog
+        handleRemoveLog,
+        handleClearLogs
       }}
     >
       {children}
