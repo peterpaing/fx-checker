@@ -3,6 +3,7 @@
 import { useExchange } from "@/app/component/ExchangeContext"
 import { useEffect, useState } from "react"
 import MarketChart from "@/app/component/MarketChart"
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 
 type MarketRate = {
   base: string
@@ -11,11 +12,14 @@ type MarketRate = {
   rate: number
 }
 
-export default function History(){
-
+export default function History() {
   const { fromCurrency, toCurrency } = useExchange()
-  const [marketStats,setMarketStats] = useState<MarketRate[]>([])
+
+  const [marketStats, setMarketStats] = useState<MarketRate[]>([])
   const [range, setRange] = useState("1M")
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
   const ranges = ["1D", "1W", "1M", "3M", "1Y", "5Y"]
 
   const today = new Date()
@@ -28,18 +32,27 @@ export default function History(){
 
   useEffect(() => {
     async function marketRate() {
-      const res = await fetch(
-        `https://api.frankfurter.dev/v2/rates?base=${fromCurrency}&quotes=${toCurrency}&from=${previousDayString}&to=${todayString}`
-      )
+      setIsLoading(true)
+      setError(null)
 
-      if (!res.ok) {
-        throw new Error(`Failed to fetch rate: ${res.status}`)
+      try {
+        const res = await fetch(
+          `https://api.frankfurter.dev/v2/rates?base=${fromCurrency}&quotes=${toCurrency}&from=${previousDayString}&to=${todayString}`
+        )
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch rate: ${res.status}`)
+        }
+
+        const data = await res.json()
+
+        setMarketStats(data)
+      } catch {
+        setError("Failed to load market rate.")
+        setMarketStats([])
+      } finally {
+        setIsLoading(false)
       }
-
-      const data = await res.json()
-
-      console.log(data)
-      setMarketStats(data)
     }
 
     marketRate()
@@ -62,48 +75,73 @@ export default function History(){
     {
       label: "CHANGE",
       value: `${change >= 0 ? "+" : ""}${change.toFixed(4)}`,
-      color: change >= 0 ? "text-green-500" : "text-red-500"
+      color: change >= 0 ? "text-green-500" : "text-red-500",
     },
     {
       label: "% CHANGE",
       value: `${percentChange >= 0 ? "▲ +" : "▼ "}${percentChange.toFixed(2)}%`,
-      color: change >= 0 ? "text-green-500" : "text-red-500"
-    }
+      color: change >= 0 ? "text-green-500" : "text-red-500",
+    },
   ]
 
   return (
     <section className="w-full max-w-[1036px] lg:mx-auto">
-    <div className="w-full md:px-6 md:w-[650px] lg:w-[1036px] py-2 px-4 my-6">
+      <div className="w-full md:px-6 md:w-[650px] lg:w-[1036px] py-2 px-4 my-6">
         <div className="lg:flex lg:items-center justify-between">
-      <div className="w-full lg:w-3/5 grid grid-cols-2 md:grid-cols-4 gap-2">
-        {stats.map((stat) => (
-          <div key={stat.label}className="w-full md:w-[140px] md:h-[81px] p-4 rounded-xl bg-neutral-900">
-            <p className="text-xs text-neutral-400"> {stat.label}</p>
-            <p className={`mt-2 text-base whitespace-nowrap ${stat.color ?? ""}`}>{stat.value}</p>
+          <div className="w-full lg:w-3/5 grid grid-cols-2 md:grid-cols-4 gap-2">
+            {isLoading ? (
+              <div className="flex items-center gap-2 text-green-500">
+                <AiOutlineLoading3Quarters className="animate-spin text-sm" />
+                <p className="text-base">Loading</p>
+              </div>
+            ) : error ? (
+              <div className="w-full">
+              <p className="text-sm text-red-400 whitespace-nowrap">{error}</p>
+              <p className="text-sm text-lime-400 whitespace-nowrap">Please refresh again </p>
+              </div>
+            ) : (
+              stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="w-full md:w-[140px] md:h-[81px] p-4 rounded-xl bg-neutral-900"
+                >
+                  <p className="text-xs text-neutral-400">
+                    {stat.label}
+                  </p>
+
+                  <p
+                    className={`mt-2 text-base whitespace-nowrap ${
+                      stat.color ?? ""
+                    }`}
+                  >
+                    {stat.value}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
-        ))}
+
+          <div className="w-[286px] mt-5 lg:mt-0 flex rounded-lg bg-neutral-900 p-1">
+            {ranges.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setRange(item)}
+                className={`px-4 py-2 text-xs rounded-md ${
+                  range === item
+                    ? "bg-neutral-700 text-white"
+                    : "text-neutral-400"
+                }
+                rounded-xl focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-black p-2`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="w-[286px] mt-5 lg:mt-0 flex rounded-lg bg-neutral-900 p-1">
-        {ranges.map((item) => (
-            <button
-            key={item}
-            type="button"
-            onClick={() => setRange(item)}
-            className={`px-4 py-2 text-xs rounded-md ${
-                range === item
-                ? "bg-neutral-700 text-white"
-                : "text-neutral-400"
-            }
-            rounded-xl focus:outline-none focus-visible:ring-2 focus:ring-lime-400 focus:ring-offset-black p-2`}
-            >
-            {item}
-            </button>
-        ))}
-        </div>
-        </div>
-    </div>
-    <MarketChart range={range} />
+      <MarketChart range={range} />
     </section>
   )
 }
