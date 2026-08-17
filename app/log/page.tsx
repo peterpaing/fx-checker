@@ -32,7 +32,11 @@ function formatTime(dateString: string, now: Date) {
 }
 
 export default function Log() {
-  const { logs, handleRemoveLog,handleClearLogs } = useExchange()
+  const {
+    logs,
+    handleRemoveLog,
+    handleClearLogs,
+  } = useExchange()
 
   const [now, setNow] = useState(new Date())
 
@@ -46,46 +50,93 @@ export default function Log() {
 
   if (!logs.length) {
     return (
-        <div className="w-full max-w-[700px] p-4 mx-auto text-center my-10 md:my-18">
-        <h3 className="text-base mb-4">No conversions logged yet</h3>
-        <p className="text-sm text-neutral-400">Every conversion is recorded here automatically when you tap LOG CONVERSION. Your log is private to this session and this browser.</p>
-        </div>
+      <div className="w-full max-w-[700px] p-4 mx-auto text-center my-10 md:my-18">
+        <h3 className="text-base mb-4">
+          No conversions logged yet
+        </h3>
+
+        <p className="text-sm text-neutral-400">
+          Every conversion is recorded here automatically when you tap
+          LOG CONVERSION. Your log is private to this session and this
+          browser.
+        </p>
+      </div>
     )
   }
 
   return (
     <section className="w-6/7 max-w-[1036px] my-6 px-4 pt-2 pb-4 bg-neutral-900 mx-auto rounded-xl">
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 px-4 pt-4">
-        <h3 className="text-base">CONVERSION LOG</h3>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 px-4 pt-4">
+        <h3 className="text-base">
+          CONVERSION LOG
+        </h3>
+
         <div className="flex justify-between md:justify-end items-center gap-6">
-        <p className="text-sm text-neutral-400">{logs.length} LOGGED</p>
-        <button
-        onClick={handleClearLogs}
-        className="w-[93px] h-[30px] text-xs text-neutral-400 border-1 border-neutral-600 rounded-lg">
-            CLEAR ALL
-        </button>
-        </div>
-        </div>
-      
+          <p className="text-sm text-neutral-400">
+            {logs.length} LOGGED
+          </p>
 
-      {logs.map((log) => (
-        <div key={log.id} className="p-4 flex justify-between items-center mt-4 bg-neutral-800 rounded-xl">
-        <div className="flex gap-4">
-            <p className="text-sm text-neutral-400">{formatTime(log.date, now)}</p>
-            <p className="text-sm">{log.fromCurrency} → {log.toCurrency} </p>
-        </div>
-
-        <div className="flex items-center gap-6">
-            <p className="text-base">{log.amount}</p>
-            <p className="text-base text-lime-400">{log.receiveAmount}</p>
-            <button
+          <button
             type="button"
-            onClick={() => handleRemoveLog(log.id)}
-            className="w-[32px] h-[32px] border-1 border-neutral-600 rounded-lg"
-            >
-            <RiDeleteBin7Line className="mx-auto" />
+            onClick={handleClearLogs}
+            className="w-[93px] h-[30px] text-xs text-neutral-400
+            border border-neutral-600 rounded-lg
+            transition-all duration-200
+            active:scale-95
+            focus:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-lime-400
+            focus-visible:ring-offset-2
+            focus-visible:ring-offset-black"
+          >
+            CLEAR ALL
           </button>
         </div>
+      </div>
+
+      {logs.map((log) => (
+        <div
+          key={log.id}
+          className="p-4 flex justify-between items-center mt-4 bg-neutral-800 rounded-xl"
+        >
+          <div className="flex gap-4">
+            <p className="text-sm text-neutral-400">
+              {formatTime(log.date, now)}
+            </p>
+
+            <p className="text-sm">
+              {log.fromCurrency} → {log.toCurrency}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <p className="text-base">
+              {log.amount}
+            </p>
+
+            <p className="text-base text-lime-400">
+              {log.receiveAmount}
+            </p>
+
+            <button
+              type="button"
+              aria-label={`Delete ${log.fromCurrency} to ${log.toCurrency} conversion`}
+              onClick={() => handleRemoveLog(log.id)}
+              className="w-[32px] h-[32px] border border-neutral-600 rounded-lg
+              transition-all duration-200
+              active:scale-95
+              focus:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-lime-400
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-black"
+            >
+              <RiDeleteBin7Line
+                aria-hidden="true"
+                className="mx-auto"
+              />
+            </button>
+          </div>
         </div>
       ))}
     </section>

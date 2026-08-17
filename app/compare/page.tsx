@@ -6,6 +6,7 @@ import { currencies } from "@/app/data/currencies"
 import Image from "next/image"
 import { FaStar } from "react-icons/fa6"
 import { FaRegStar } from "react-icons/fa6"
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 
 type Rate = {
   quote: string
@@ -22,6 +23,8 @@ export default function Compare() {
   } = useExchange()
 
   const [rates, setRates] = useState<Rate[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const compareCurrencies = currencies
     .filter(
@@ -33,103 +36,199 @@ export default function Compare() {
 
   useEffect(() => {
     async function fetchRates() {
-      const quotes = compareCurrencies
-        .map((currency) => currency.code)
-        .join(",")
+      setIsLoading(true)
+      setError(null)
 
-      const res = await fetch(
-        `https://api.frankfurter.dev/v2/rates?base=${fromCurrency}&quotes=${quotes}`
-      )
+      try {
+        const quotes = compareCurrencies
+          .map((currency) => currency.code)
+          .join(",")
 
-      if (!res.ok) {
-        throw new Error(`Failed to fetch rates: ${res.status}`)
+        const res = await fetch(
+          `https://api.frankfurter.dev/v2/rates?base=${fromCurrency}&quotes=${quotes}`
+        )
+
+        if (!res.ok) {
+          throw new Error(
+            `Failed to fetch rates: ${res.status}`
+          )
+        }
+
+        const data = await res.json()
+
+        setRates(data)
+      } catch {
+        setRates([])
+        setError("Unable to load comparison rates.")
+      } finally {
+        setIsLoading(false)
       }
-
-      const data = await res.json()
-
-      setRates(data)
     }
 
     fetchRates()
   }, [fromCurrency, toCurrency])
 
-
-  if(!amount){
+  if (!amount) {
     return (
       <div className="w-full max-w-[460px] p-4 mx-auto text-center my-10 md:my-18">
-        <h3 className="text-base mb-4">No comparison available</h3>
-        <p className="text-sm text-neutral-400">Enter an amount in SEND above to see what your money is worth in other currencies.</p>
-        </div>
+        <h3 className="text-base mb-4">
+          No comparison available
+        </h3>
+
+        <p className="text-sm text-neutral-400">
+          Enter an amount in SEND above to see what your money
+          is worth in other currencies.
+        </p>
+      </div>
     )
   }
 
   return (
     <section className="w-6/7 max-w-[1036px] my-6 px-4 pt-2 pb-4 bg-neutral-900 mx-auto rounded-xl">
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0 px-4 pt-4">
-    <div className="flex items-center gap-3">
-      <h3 className="text-sm text-neutral-400 ">MULTI-CURRENCY</h3>
-      <p className="text-base">{amount} FROM {fromCurrency}</p>
-      </div>
-      <p className="text-xs text-neutral-400">{compareCurrencies.length} PAIRS</p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0 px-4 pt-4">
+        <div className="flex items-center gap-3">
+          <h3 className="text-sm text-neutral-400">
+            MULTI-CURRENCY
+          </h3>
+
+          <p className="text-base">
+            {amount} FROM {fromCurrency}
+          </p>
         </div>
-      {rates.map((item) => {
-        const currency = currencies.find(
-          (currency) => currency.code === item.quote
-        )
 
-        if (!currency) {
-          return null
-        }
+        <p
+          className="text-xs text-neutral-400"
+          aria-label={`${compareCurrencies.length} currency pairs`}
+        >
+          {compareCurrencies.length} PAIRS
+        </p>
+      </div>
 
-        const convertedAmount = Number(amount) * item.rate
+      {isLoading ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex items-center justify-center gap-2 py-10 text-green-500"
+        >
+          <AiOutlineLoading3Quarters
+            aria-hidden="true"
+            className="animate-spin"
+          />
 
-        const isFavorite = favorites.some(
-          (favorite) =>
-            favorite.fromCurrency === fromCurrency &&
-            favorite.toCurrency === item.quote
-        )
+          <p>Loading comparison rates...</p>
+        </div>
+      ) : error ? (
+        <div
+          role="alert"
+          className="py-10 text-center"
+        >
+          <p className="text-sm text-red-400">
+            {error}
+          </p>
 
-        return (
-          <div key={item.quote} className="p-4 flex justify-between items-center mt-4 bg-neutral-800 rounded-xl">
-            <div className="flex items-center gap-4">
-              <Image
-                src={currency.flag}
-                alt={currency.name}
-                width={24}
-                height={24}
-                className="rounded-full"
-              />
+          <p className="text-sm text-lime-400 mt-1">
+            Please refresh the page and try again.
+          </p>
+        </div>
+      ) : (
+        rates.map((item) => {
+          const currency = currencies.find(
+            (currency) => currency.code === item.quote
+          )
+
+          if (!currency) {
+            return null
+          }
+
+          const convertedAmount =
+            Number(amount) * item.rate
+
+          const isFavorite = favorites.some(
+            (favorite) =>
+              favorite.fromCurrency === fromCurrency &&
+              favorite.toCurrency === item.quote
+          )
+
+          return (
+            <div
+              key={item.quote}
+              className="p-4 flex justify-between items-center mt-4 bg-neutral-800 rounded-xl"
+            >
+              <div className="flex items-center gap-4">
+                <Image
+                  src={currency.flag}
+                  alt={currency.name}
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+                />
+
                 <div>
-              <p className="text-sm">{item.quote}</p>
-              <p className="text-xs text-neutral-400">{currency.name}</p>
-            </div>
-            </div>
+                  <p className="text-sm">
+                    {item.quote}
+                  </p>
 
-            <div className="flex items-center gap-6">
-            <div className="flex flex-col items-center">
-                <p className="text-base">{convertedAmount.toFixed(2)}</p>
-                <p className="pt-1 text-xs text-neutral-400 flex items-center whitespace-nowrap">rate: {item.rate.toFixed(4)}</p>
+                  <p className="text-xs text-neutral-400">
+                    {currency.name}
+                  </p>
+                </div>
               </div>
 
-            <button
-            type="button"
-            onClick={() => handleFavorite(fromCurrency, item.quote)}
-            className={`w-[32px] h-[32px] border rounded-lg ${
-                isFavorite
-                ? "border-lime-400"
-                : "border-neutral-300"
-            }`}
-            >
-            {isFavorite ? (
-                <FaStar className="mx-auto text-lime-400" />
-            ) : (
-                <FaRegStar className="mx-auto" />
-            )}
-            </button>
+              <div className="flex items-center gap-6">
+                <div className="flex flex-col items-center">
+                  <p className="text-base">
+                    {convertedAmount.toFixed(2)}
+                  </p>
+
+                  <p className="pt-1 text-xs text-neutral-400 flex items-center whitespace-nowrap">
+                    rate: {item.rate.toFixed(4)}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  aria-label={
+                    isFavorite
+                      ? `Remove ${fromCurrency} to ${item.quote} from favorites`
+                      : `Add ${fromCurrency} to ${item.quote} to favorites`
+                  }
+                  aria-pressed={isFavorite}
+                  onClick={() =>
+                    handleFavorite(
+                      fromCurrency,
+                      item.quote
+                    )
+                  }
+                  className={`w-[32px] h-[32px] border rounded-lg
+                  transition-all duration-200
+                  active:scale-95
+                  focus:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-lime-400
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-black ${
+                    isFavorite
+                      ? "border-lime-400"
+                      : "border-neutral-300"
+                  }`}
+                >
+                  {isFavorite ? (
+                    <FaStar
+                      aria-hidden="true"
+                      className="mx-auto text-lime-400"
+                    />
+                  ) : (
+                    <FaRegStar
+                      aria-hidden="true"
+                      className="mx-auto"
+                    />
+                  )}
+                </button>
+              </div>
             </div>
-          </div>
-        )
-      })}
+          )
+        })
+      )}
     </section>
   )
 }

@@ -90,14 +90,29 @@ export default function History() {
         <div className="lg:flex lg:items-center justify-between">
           <div className="w-full lg:w-3/5 grid grid-cols-2 md:grid-cols-4 gap-2">
             {isLoading ? (
-              <div className="flex items-center gap-2 text-green-500">
-                <AiOutlineLoading3Quarters className="animate-spin text-sm" />
+              <div
+                role="status"
+                aria-live="polite"
+                className="flex items-center gap-2 text-green-500"
+              >
+                <AiOutlineLoading3Quarters
+                  aria-hidden="true"
+                  className="animate-spin text-sm"
+                />
                 <p className="text-base">Loading</p>
               </div>
             ) : error ? (
-              <div className="w-full">
-              <p className="text-sm text-red-400 whitespace-nowrap">{error}</p>
-              <p className="text-sm text-lime-400 whitespace-nowrap">Please refresh again </p>
+              <div
+                role="alert"
+                className="w-full"
+              >
+                <p className="text-sm text-red-400 whitespace-nowrap">
+                  {error}
+                </p>
+
+                <p className="text-sm text-lime-400 whitespace-nowrap">
+                  Please refresh the page and try again.
+                </p>
               </div>
             ) : (
               stats.map((stat) => (
@@ -126,6 +141,7 @@ export default function History() {
               <button
                 key={item}
                 type="button"
+                aria-pressed={range === item}
                 onClick={() => setRange(item)}
                 className={`px-4 py-2 text-xs rounded-md ${
                   range === item
